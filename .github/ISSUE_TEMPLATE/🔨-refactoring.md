@@ -1,6 +1,6 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
+name: "\U0001F528 Refactoring"
+about: 기존 코드 수정
 title: ''
 labels: ''
 assignees: ''
