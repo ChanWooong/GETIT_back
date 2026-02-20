@@ -1,8 +1,8 @@
-package com.getit.domain.member.service;
+package com.getit.domain.management.service;
 
-import com.getit.domain.member.entity.Member;
-import com.getit.domain.member.Role;
-import com.getit.domain.member.repository.MemberRepository;
+import com.getit.domain.management.entity.Member;
+import com.getit.domain.management.Role;
+import com.getit.domain.management.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

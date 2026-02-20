@@ -1,8 +1,8 @@
-package com.getit.domain.member.repository;
+package com.getit.domain.management.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.getit.domain.member.entity.Member;
-import com.getit.domain.member.Role;
+import com.getit.domain.management.entity.Member;
+import com.getit.domain.management.Role;
 import java.util.Optional;
 import java.util.List;
 

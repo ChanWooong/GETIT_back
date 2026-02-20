@@ -1,6 +1,6 @@
-package com.getit.domain.member.entity;
+package com.getit.domain.management.entity;
 
-import com.getit.domain.member.Role;
+import com.getit.domain.management.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
