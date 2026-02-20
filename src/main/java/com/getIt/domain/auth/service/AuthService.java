@@ -1,7 +1,9 @@
 package com.getit.domain.auth.service;
 
 import com.getit.domain.auth.dto.*;
-import com.getit.domain.management.Role;
+import com.getit.domain.member.entity.Member;
+import com.getit.domain.member.Role;
+import com.getit.domain.member.repository.MemberRepository;
 import com.getit.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
