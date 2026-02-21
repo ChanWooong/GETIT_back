@@ -12,5 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     boolean existsByStudentId(Long studentId);
 
-    List<Member> findByRole(Role role);
+    List<Member> findAllByIsApprovedFalse();
+
+    List<Member> findAllByRole(Role role);
 }

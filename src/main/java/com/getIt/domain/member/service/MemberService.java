@@ -1,11 +1,15 @@
 package com.getit.domain.member.service;
 
+import com.getit.domain.member.dto.MemberResponse;
 import com.getit.domain.member.entity.Member;
 import com.getit.domain.member.Role;
 import com.getit.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -40,5 +44,27 @@ public class MemberService {
         }
 
         return member;
+    }
+    @Transactional
+    public void approveMember(Long memberId){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+
+        if (member.getIsApproved()) {
+            throw new IllegalStateException("이미 승인된 사용자입니다.");
+        }
+        member.approve(); // member entity 안에 존재.
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberResponse> findPendingMembers() {
+        return memberRepository.findAllByIsApprovedFalse().stream()
+                .map(member -> MemberResponse.builder()
+                        .id(member.getId())
+                        .studentId(member.getStudentId())
+                        .name(member.getName())
+                        .role(member.getRole())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
