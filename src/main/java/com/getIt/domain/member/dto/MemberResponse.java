@@ -20,7 +20,7 @@ public class MemberResponse {
     private boolean hasInfo;
 
     private String name;
-    private Long studentId;
+    private String studentId;
     private College college;
     private String department;
     private String cellNum;

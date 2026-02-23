@@ -23,7 +23,7 @@ public class MemberInfo {
     private String name;
 
     @Column(nullable = false, unique = true)
-    private Long studentId;
+    private String studentId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
