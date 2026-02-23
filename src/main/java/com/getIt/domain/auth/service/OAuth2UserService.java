@@ -44,7 +44,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     private Member saveOrUpdate(OAuthAttributes attributes) {
         Member member = memberRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName())) // 이미 가입된 경우 이름 업데이트
+                .map(entity -> entity.update(attributes.getEmail())) // 이미 가입된 경우 이름 업데이트
                 .orElse(attributes.toEntity()); // 신규 가입인 경우 Entity 생성
 
         return memberRepository.save(member);
