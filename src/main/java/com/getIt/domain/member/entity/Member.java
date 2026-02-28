@@ -20,9 +20,6 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
-    private String socialId;
-
     @Enumerated(EnumType.STRING)
     private SocialType socialType; // GOOGLE, KAKAO 등 저장
 

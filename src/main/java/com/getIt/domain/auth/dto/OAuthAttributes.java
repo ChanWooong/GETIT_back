@@ -72,7 +72,6 @@ public class OAuthAttributes {
     public Member toEntity() {
         return Member.builder()
                 .email(email)
-                .socialId(socialId)
                 .socialType(socialType)
                 .role(Role.ROLE_GUEST) // 회원가입 직후는 GUEST 권한
                 .build();
