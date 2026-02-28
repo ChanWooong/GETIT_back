@@ -48,11 +48,20 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+        if (kakaoAccount == null){
+            throw new IllegalArgumentException("kakao_account가 누락되었습니다.");
+        }
         Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
-
+        if (profile == null){
+            throw new IllegalArgumentException("profile 정보가 누락되었습니다.");
+        }
+        String email = (String) kakaoAccount.get("email");
+        if (email == null){
+            throw new IllegalArgumentException("email이 누락되었습니다.");
+        }
         return OAuthAttributes.builder()
                 .name((String) profile.get("nickname"))
-                .email((String) kakaoAccount.get("email"))
+                .email(email)
                 .socialId(String.valueOf(attributes.get("id"))) // 카카오는 id가 Long 타입임
                 .socialType(SocialType.KAKAO)
                 .attributes(attributes)
@@ -63,7 +72,6 @@ public class OAuthAttributes {
     public Member toEntity() {
         return Member.builder()
                 .email(email)
-                .socialId(socialId)
                 .socialType(socialType)
                 .role(Role.ROLE_GUEST) // 회원가입 직후는 GUEST 권한
                 .build();
