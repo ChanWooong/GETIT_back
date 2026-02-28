@@ -24,6 +24,6 @@ public class MemberInfoController {
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @Valid @RequestBody MemberInfoRequest requestDto) {
         memberService.saveMemberInfo(principalDetails.getMember().getId(), requestDto);
-        return ResponseEntity.ok("추가 정보 등록이 완료되었습니다. 관리자 승인을 기다려주세요.");
+        return ResponseEntity.ok("추가 정보 등록이 완료되었습니다.");
     }
 }
