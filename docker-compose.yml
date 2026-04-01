@@ -14,8 +14,11 @@ services:
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - KAKAO_CLIENT_ID=${KAKAO_CLIENT_ID}
       - KAKAO_CLIENT_SECRET=${KAKAO_CLIENT_SECRET}
-      - CORS_ALLOWED_ORIGINS=https://getitweb.vercel.app
-      - CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS,PATCH
+      - APP_CORS_ALLOWED_ORIGINS=https://getitweb.vercel.app
+      - APP_CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS,PATCH
+      - FILE_UPLOAD_ALLOWED_EXTENSIONS=${FILE_UPLOAD_ALLOWED_EXTENSIONS}
+    volumes:
+      - /home/ubuntu/assignment:/app/uploads
     depends_on: [db]
   db:
     image: mysql:8
