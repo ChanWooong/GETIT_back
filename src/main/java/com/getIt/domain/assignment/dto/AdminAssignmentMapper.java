@@ -19,7 +19,8 @@ public final class AdminAssignmentMapper {
     // Assignment + File 목록을 DTO로 변환
     public static AdminAssignmentListResponse toResponse(
             Assignment assignment,
-            List<AssignmentFile> files
+            List<AssignmentFile> files,
+            long feedbackCount
     ) {
 
         Task task = assignment.getTask();
@@ -50,6 +51,7 @@ public final class AdminAssignmentMapper {
                                 .map(AdminAssignmentMapper::toFileInfo)
                                 .collect(Collectors.toList())
                 )
+                .feedbackCount(feedbackCount)
                 .build();
     }
 
@@ -90,13 +92,15 @@ public final class AdminAssignmentMapper {
     // Assignment 리스트 + 파일 Map을 DTO 리스트로 변환
     public static List<AdminAssignmentListResponse> toResponseList(
             List<Assignment> assignments,
-            Map<Long, List<AssignmentFile>> fileMap
+            Map<Long, List<AssignmentFile>> fileMap,
+            Map<Long, Long> feedbackCountByAssignmentId
     ) {
 
         return assignments.stream()
                 .map(a -> toResponse(
                         a,
-                        fileMap.getOrDefault(a.getId(), List.of())
+                        fileMap.getOrDefault(a.getId(), List.of()),
+                        feedbackCountByAssignmentId.getOrDefault(a.getId(), 0L)
                 ))
                 .collect(Collectors.toList());
     }

@@ -6,6 +6,7 @@ import com.getit.domain.assignment.dto.AdminAssignmentDetailResponse;
 import com.getit.domain.assignment.dto.AdminAssignmentListResponse;
 import com.getit.domain.assignment.entity.Assignment;
 import com.getit.domain.assignment.entity.AssignmentFile;
+import com.getit.domain.assignment.repository.AssignmentFeedbackRepository;
 import com.getit.domain.assignment.repository.AssignmentFileRepository;
 import com.getit.domain.assignment.repository.AssignmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.net.MalformedURLException;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +33,7 @@ public class AdminAssignmentServiceImpl implements AdminAssignmentService {
 
     private final AssignmentRepository assignmentRepository;
     private final AssignmentFileRepository assignmentFileRepository;
+    private final AssignmentFeedbackRepository assignmentFeedbackRepository;
 
     @Value("${file.upload.dir}")
     private String storagePath;
@@ -63,9 +67,19 @@ public class AdminAssignmentServiceImpl implements AdminAssignmentService {
                                 file -> file.getAssignment().getId()
                         ));
 
+        Map<Long, Long> feedbackCountByAssignmentId = new HashMap<>();
+        if (!assignmentIds.isEmpty()) {
+            List<Object[]> countRows = assignmentFeedbackRepository.countFeedbackByAssignmentIds(assignmentIds);
+            for (Object[] row : countRows) {
+                Long aid = (Long) row[0];
+                long cnt = ((Number) row[1]).longValue();
+                feedbackCountByAssignmentId.put(aid, cnt);
+            }
+        }
+
         // Entity → DTO 변환
         List<AdminAssignmentListResponse> dtoList =
-                AdminAssignmentMapper.toResponseList(assignments, fileMap);
+                AdminAssignmentMapper.toResponseList(assignments, fileMap, feedbackCountByAssignmentId);
 
         return new PageImpl<>(dtoList, pageable, assignmentPage.getTotalElements());
     }

@@ -31,4 +31,7 @@ public class AdminAssignmentListResponse {
 
     // 파일 목록
     private List<AssignmentFileInfoDto> files;
+
+    /** 관리자 코멘트(피드백) 개수 */
+    private Long feedbackCount;
 }
